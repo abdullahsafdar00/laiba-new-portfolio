@@ -20,17 +20,7 @@ const services = [
     title: 'E-commerce',
     description: 'Build online stores with smooth checkout and payment gateways.',
     image: 'https://source.unsplash.com/featured/?ecommerce',
-  },
-  {
-    title: 'Brand Identity',
-    description: 'Create cohesive brand visuals from logos to colors and typography.',
-    image: 'https://source.unsplash.com/featured/?branding',
-  },
-  {
-    title: 'Support & Maintenance',
-    description: 'We provide long-term support, monitoring, and updates.',
-    image: 'https://source.unsplash.com/featured/?maintenance',
-  },
+  }
 ];
 
 const TiltCard = ({ service }) => {

@@ -148,7 +148,7 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <section className="w-full min-h-screen bg-white flex flex-col items-center justify-start pt-8 relative mb-32">
+    <section className=" hidden w-full min-h-screen bg-white flex-col items-center justify-start pt-8 relative mb-32">
       <h2 className="text-3xl sm:text-4xl font-bold text-center text-pink-500">
         Designs
       </h2>

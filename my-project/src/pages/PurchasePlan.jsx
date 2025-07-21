@@ -73,22 +73,22 @@ const PaymentForm = ({ plan, form, setForm, loading, setLoading, navigate }) => 
         window.TCO.requestToken(async (tokenResponse) => {
           // 4. Place order in backend
           const orderRes = await fetch("http://localhost:5000/api/orders", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              customerName: form.name,
-              email: form.email,
-              items: [plan.name],
-              total: plan.price.replace("$", ""),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerName: form.name,
+          email: form.email,
+          items: [plan.name],
+          total: plan.price.replace("$", ""),
               paymentToken: tokenResponse.token,
-            }),
-          });
+        }),
+      });
           if (orderRes.ok) {
             toast.success("Payment successful! Order placed. Check your email.");
-            setForm({ name: "", email: "" });
+        setForm({ name: "", email: "" });
             setStep(3);
             setTimeout(() => navigate("/order-success"), 2000);
-          } else {
+      } else {
             toast.error("Order placement failed, but payment succeeded.");
             setStep(1);
           }
@@ -123,29 +123,29 @@ const PaymentForm = ({ plan, form, setForm, loading, setLoading, navigate }) => 
   return (
     <form onSubmit={handle2COPayment} className="space-y-4">
       <Progress step={step} />
-      <div>
+          <div>
         <label className="block font-medium mb-1 text-sm">Full Name</label>
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          placeholder="Your Name"
-          required
+              placeholder="Your Name"
+              required
           disabled={loading}
-        />
-      </div>
-      <div>
+            />
+          </div>
+          <div>
         <label className="block font-medium mb-1 text-sm">Email Address</label>
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
-          placeholder="Your Email"
-          required
+              placeholder="Your Email"
+              required
           disabled={loading}
         />
       </div>

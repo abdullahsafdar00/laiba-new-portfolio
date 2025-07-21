@@ -7,7 +7,7 @@ const Hero = () => {
       <div className="w-full max-w-7xl mx-auto">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-20 py-10 md:py-16">
           {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left max-w-2xl">
+          <div className="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left max-w-2xl">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-pink-500 leading-tight mb-6">
               BOOST YOUR SALES
               <span className="block mt-2 text-gray-900 text-4xl">on Amazon with  Optimized Visuals </span>
@@ -32,7 +32,7 @@ const Hero = () => {
           </div>
 
           {/* Image */}
-          <div className="flex-1 flex justify-center lg:justify-end w-full min-h-[320px] md:min-h-[400px]">
+          <div className="hidden md:flex flex-1 justify-center lg:justify-end w-full min-h-[320px] md:min-h-[400px]">
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl aspect-[3/4]">
               <img
                 src="/laiba.jpg"

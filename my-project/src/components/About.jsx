@@ -44,17 +44,8 @@ export default function About() {
             Hi! I’m <span className="font-semibold text-xl text-pink-500">Laiba</span>, a passionate Graphic Designer who transforms ideas into compelling visuals. From branding and packaging to digital campaigns and social media content, I help businesses create designs that not only look stunning but also communicate their message effectively
           </p>
 
-          {/* Stats Section */}
-          <div className="flex gap-6 py-6">
-            <div className="flex-1 rounded-2xl p-6 text-center">
-              <h4 className="text-3xl font-bold text-pink-600">150+</h4>
-              <p className="text-gray-500 mt-1">Projects Completed</p>
-            </div>
-            <div className="flex-1 rounded-2xl p-6 text-center">
-              <h4 className="text-3xl font-bold text-pink-600">100+</h4>
-              <p className="text-gray-500 mt-1">Happy Clients</p>
-            </div>
-          </div>
+      
+          
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">

@@ -1,6 +1,65 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ClipboardList, ImageIcon, Send } from 'lucide-react';
+import ResultsSection from '../components/ResultsSection';
+
+// ResultMetric animates every time it comes into view using IntersectionObserver
+const ResultMetric = ({ label, end, suffix = '' }) => {
+  const ref = React.useRef(null);
+  const rafRef = React.useRef(null);
+  const [val, setVal] = React.useState(0);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const duration = 1400;
+
+    const run = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      const startTime = performance.now();
+      const step = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(end * eased);
+        setVal(current);
+        if (progress < 1) rafRef.current = requestAnimationFrame(step);
+      };
+      rafRef.current = requestAnimationFrame(step);
+    };
+
+    const reset = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      setVal(0);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) run();
+          else reset();
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [end]);
+
+  return (
+    <div ref={ref} className="bg-white rounded-xl p-6 text-center shadow-sm">
+      <div className="text-3xl md:text-4xl font-bold text-pink-600">{val}{suffix}</div>
+      <div className="text-sm text-gray-600 mt-2">{label}</div>
+    </div>
+  );
+};
+
+
 
 const Step = ({ Icon, title, children }) => (
   <div className="flex flex-col items-center text-center gap-4 p-6 bg-white rounded-xl shadow-md">
@@ -33,10 +92,12 @@ const Services = () => {
   };
 
   return (
-    <section className="min-h-screen bg-white pt-20 pb-24 px-4">
+    <section className="min-h-screen bg-white pt-20  px-4">
       <div className="max-w-6xl mx-auto">
+
+
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-semibold text-black">Process — <span className='text-pink-600'>How I Work</span></h1>
+          <h1 className="text-4xl font-semibold text-black">How it <span className='text-pink-600'>Works</span></h1>
           <p className="mt-2 text-gray-600 max-w-2xl mx-auto">A clear, three-step workflow so you know what to expect from start to finish.</p>
         </div>
 
@@ -54,7 +115,10 @@ const Services = () => {
           </Step>
         </div>
 
-        <div className="bg-pink-50 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Results placed under How it Works */}
+        <ResultsSection />
+
+        <div className="bg-pink-50 rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 mb-20">
           <div>
             <h2 className="text-2xl font-semibold">Ready to start your project?</h2>
             <p className="text-sm text-gray-600">Select a plan or book a consultation and I'll walk you through the next steps.</p>

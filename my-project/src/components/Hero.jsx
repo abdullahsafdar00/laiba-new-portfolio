@@ -37,7 +37,7 @@ const Hero = () => {
 
     return (
         <>
-            <div className="min-h-screen pb-20">
+            <div className="min-h-screen">
                 {/* Hero Section */}
                 <div className="relative flex flex-col my-10 items-center justify-center text-sm px-4 md:px-16 lg:px-24 xl:px-40 text-black">
                     <div className="absolute top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-pink-300 blur-[100px] opacity-30"></div>
@@ -66,7 +66,7 @@ const Hero = () => {
 
                     {/* Headline + CTA */}
                     <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center mt-4 md:leading-[70px]">
-                        Boost Your Sales On Amazon<span className=" bg-gradient-to-r from-pink-700 to-pink-600 bg-clip-text text-transparent text-nowrap"> With optimized visuals.</span>
+                        Boost Your Sales On Amazon<span className=" bg-gradient-to-r from-pink-700 to-pink-600 bg-clip-text text-transparent text-nowrap"> With Optimized Visuals.</span>
                     </h1>
 
                     <p className="max-w-md text-center text-base my-7">Helping Brands to Grow on Amazon with Optimized Visual Content | Amazon Design Expert</p>
@@ -83,7 +83,7 @@ const Hero = () => {
                         </button>
                     </div>
 
-                    <p className="py-6 text-slate-600 mt-14">Trusting by leading brands, including</p>
+                    <p className="py-6 text-slate-600 mt-10">Trusting by leading brands, including</p>
 
                      <div className="overflow-hidden w-full relative max-w-6xl mx-auto select-none">
           <div className="absolute left-0 top-0 h-full w-20 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />

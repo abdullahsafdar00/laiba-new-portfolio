@@ -22,19 +22,19 @@ const Navbar = () => {
   const menuItems = [
     { name: 'Home', href: '/', icon: Home },
     { name: 'Portfolio', href: '#portfolio', icon: FolderOpen },
-    { name: 'Services', href: '/services', icon: ClipboardList },
+    { name: 'Services', href: '#services', icon: ClipboardList },
     { name: 'Testimonials', href: '#testimonials', icon: Star },
     { name: 'About', href: '#about', icon: User },
     { name: 'Contact', href: '#contact', icon: Mail }
   ];
 
   return (
-    <nav className="h-[70px] w-full px-4 fixed bg-transparent backdrop-blur-md sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-50 text-gray-700 transition-all">
+  <nav className="h-[70px] w-full px-4 fixed backdrop-blur-md sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-520 text-gray-700 transition-all border-b border-transparent">
       
       {/* Logo */}
-      <a href="#home" className="text-pink-600 flex-shrink-0">
-       <h1 className='text-4xl font-semibold'>Laiba S.</h1>
-      </a>
+  <a href="#home" className="text-pink-600 flex-shrink-0">
+   <h1 className='text-2xl sm:text-3xl md:text-4xl font-semibold'>Laiba S.</h1>
+  </a>
 
       {/* Desktop Menu */}
       <div className="hidden lg:flex items-center gap-8">
@@ -47,7 +47,7 @@ const Navbar = () => {
                 e.preventDefault();
                 scrollToSection(item.href.slice(1));
               }}
-              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300"
+              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300 interactive"
             >
               <span className="block text-xl group-active:scale-90 transition-transform duration-300">
                 {item.name}
@@ -65,7 +65,7 @@ const Navbar = () => {
                   }, 0);
                 }
               }}
-              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300"
+              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300 interactive"
             >
               <span className="block text-xl group-active:scale-90 transition-transform duration-300">
                 {item.name}
@@ -79,7 +79,7 @@ const Navbar = () => {
       <div className="hidden lg:flex items-center">
         <Link
           to="/book-consultation"
-          className="bg-pink-500 hover:shadow-[0px_0px_30px_14px] shadow-[0px_0px_30px_7px] hover:shadow-white/50 shadow-white/50 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-pink-400 transition duration-300"
+          className="bg-pink-500 hover:shadow-[0px_0px_30px_14px] shadow-[0px_0px_30px_7px] hover:shadow-white/50 shadow-white/50 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-pink-400 transition duration-300 interactive"
         >
           Book a Consultation
         </Link>
@@ -88,13 +88,18 @@ const Navbar = () => {
       {/* Mobile Menu Toggle */}
       <button
         onClick={toggleMenu}
+        aria-controls="mobile-menu"
+        aria-expanded={isMenuOpen}
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         className="lg:hidden text-gray-600 hover:text-pink-500 transition-colors duration-300 p-2"
       >
-        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
       </button>
 
       {/* Mobile Menu */}
       <div
+        id="mobile-menu"
+        role="menu"
         className={`absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 transform transition-all duration-300 ease-in-out lg:hidden ${
           isMenuOpen
             ? 'translate-y-0 opacity-100 visible'

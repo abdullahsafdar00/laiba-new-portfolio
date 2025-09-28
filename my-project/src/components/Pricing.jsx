@@ -31,7 +31,7 @@ const plans = [
   {
     name: 'Industry',
     price: '$150',
-    billing: '',
+    billing: '/5product',
     note: 'Perfect for Startups',
     popular: false,
     features: [
@@ -56,66 +56,44 @@ const Pricing = () => {
   return (
     <section className="py-20 px-4 max-w-7xl mx-auto items-center" id="pricing">
       <h1 className="text-center text-5xl font-semibold text-pink-600">Flexible Plans for Your Design Needs</h1>
-      <p className="text-center text-black mt-2 max-w-xl mx-auto">
+      <p className="text-center text-black mt-4 max-w-xl mx-auto">
         Choose a plan that fits your project — pay only for what you need.
       </p>
 
 
 
-      <div className="mt-8 flex flex-col md:flex-row gap-8 justify-center items-center">
+      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {plans.map((plan, idx) => (
-          <div
-            key={idx}
-            className={`relative max-w-80 w-full ${plan.popular ? 'scale-105 z-10' : 'scale-100'}`}
-          >
+          <div key={idx} className={`relative w-full ${plan.popular ? 'lg:scale-105 z-10' : ''}`}>
             {plan.popular && (
-              <div className="absolute inset-x-0 top-1 flex justify-center">
-                <span className="rounded-full bg-gradient-to-r from-orange-400 to-pink-500 px-3 py-1 text-xs font-semibold text-white">
-                  Most Popular
-                </span>
+              <div className="absolute inset-x-0 -top-3 flex justify-center">
+                <span className="rounded-full bg-gradient-to-r from-orange-400 to-pink-500 px-3 py-1 text-xs font-semibold text-white shadow">Most Popular</span>
               </div>
             )}
-            <div className="mt-4 rounded-lg border-2 border-gray-800 bg-white shadow-lg">
-              <div className="border-b p-6">
-                <h3 className="text-2xl font-bold">{plan.name}</h3>
+
+            <div className="mt-6 bg-white rounded-xl shadow-lg border border-gray-100 interactive hover:shadow-xl hover:-translate-y-1 transition-transform duration-200">
+              <div className="p-6 border-b">
+                <h3 className="text-2xl font-semibold">{plan.name}</h3>
                 <p className="text-gray-500">{plan.note}</p>
               </div>
               <div className="p-6">
                 <div className="mb-4 flex items-baseline">
-                  <span className="text-3xl font-bold">{plan.price}</span>
+                  <span className="text-2xl font-bold text-pink-600">{plan.price}</span>
                   {plan.billing && (
-                    <span className="ml-1 text-sm text-gray-500">{plan.billing}</span>
+                    <span className="ml-2 text-sm text-gray-500">{plan.billing}</span>
                   )}
                 </div>
-                <ul className="space-y-1 text-gray-500">
+                <ul className="space-y-2 text-gray-600">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <svg
-                        className="h-4 w-4 text-pink-600"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="text-pink-600 mt-1">•</span>
                       <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="border-t p-6">
-                <button
-                  className="w-full rounded-lg border-2 border-pink-600 px-4 py-2 text-white hover:opacity-90 transition-all hover:text-pink-600 hover:bg-transparent duration-300 bg-pink-600 font-semibold"
-                  onClick={() => handleChoosePlan(plan)}
-                >
-                 Request Quote
-                </button>
+              <div className="p-6 border-t">
+                <button className="w-full rounded-full bg-pink-600 text-white py-3 font-semibold hover:bg-pink-700 transition" onClick={() => handleChoosePlan(plan)}>Request a Quote</button>
               </div>
             </div>
           </div>

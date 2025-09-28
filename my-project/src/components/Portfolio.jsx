@@ -9,7 +9,7 @@ const Portfolio = ({ preview = false }) => {
 
   return (
   <div
-      className={`w-full min-h-screen px-4 sm:px-6 lg:px-8 py-16 transition-colors duration-500 overflow-x-hidden`}
+      className={`w-full min-h-screen px-4 sm:px-6 lg:px-8 pb-16 transition-colors duration-500 overflow-x-hidden`}
     >
      <motion.div
   initial={{ opacity: 0, y: 30 }}
@@ -50,7 +50,7 @@ const Portfolio = ({ preview = false }) => {
                   {project.title}
                 </h3>
                 <p
-                  className={`mb-4 text-pink-700`}
+                  className={`mb-4 text-black`}
                 >
                   {project.description}
                 </p>
@@ -60,10 +60,7 @@ const Portfolio = ({ preview = false }) => {
                   {project.skills.map((skill, i) => (
                     <span
                       key={i}
-                      className={`px-3 py-1 text-sm rounded-full border
-                        border-pink-600  bg-pink-100 text-pink-700 font-medium shadow-sm
-                         
-                      `}
+                      className={`px-3 py-1 text-sm rounded-full border border-pink-600 bg-pink-100 text-pink-700 font-medium shadow-sm interactive hover:scale-105 active:scale-100`}
                     >
                       {skill}
                     </span>
@@ -73,7 +70,8 @@ const Portfolio = ({ preview = false }) => {
                 {/* View Button */}
                 <Link
                   to={`/project/${project.slug}`}
-                  className={`inline-flex items-center gap-2 px-5 py-2 font-medium rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition-all duration-300`}
+                  className={`inline-flex items-center gap-2 px-5 py-2 font-medium rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition-all duration-300 interactive focus-visible`}
+                  aria-label={`View project ${project.title}`}
                 >
                   View Project
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -87,7 +85,7 @@ const Portfolio = ({ preview = false }) => {
                 <img
                   src={project.img}
                   alt={project.title}
-                  className="h-72 w-full object-cover rounded-xl shadow-lg"
+                  className="w-full object-cover rounded-xl shadow-lg h-56 sm:h-64 md:h-72 lg:h-72 transition-transform duration-300 interactive hover:scale-105"
                 />
               </div>
             </motion.div>

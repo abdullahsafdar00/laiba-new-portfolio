@@ -10,3 +10,15 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Project image manifest
+
+Place each project's images in `public/projects/<slug>/` (slug is a URL-friendly version of the project title, e.g. `pink-lacto-ampoule-listing`). All images should be `1500x1500` for best results.
+
+After adding images run:
+
+```bash
+npm run generate-manifest
+```
+
+This creates `src/data/projectImages.json` which `ProjectGallery.jsx` uses to display per-project galleries.

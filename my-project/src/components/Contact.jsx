@@ -79,9 +79,9 @@ export default function Contact() {
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full md:w-1/2 bg-white pl-10 pt-10 h-[500px] z-50 rounded-2xl shadow-xl hover:shadow-2xl transition"
+        className="w-full md:w-1/2 bg-white pl-10 pt-10 h-[500px] z-30 rounded-2xl shadow-xl hover:shadow-2xl transition"
       >
-        <h2 className="text-3xl font-bold mb-6">
+        <h2 className="text-3xl font-semibold mb-6">
           <span className="text-pink-500 italic">Contact</span> Information
         </h2>
         <ul className="space-y-6">
@@ -105,9 +105,9 @@ export default function Contact() {
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="w-full md:w-1/2 z-50 rounded-2xl p-10 shadow-xl hover:shadow-2xl transition"
+        className="w-full md:w-1/2 z-30 rounded-2xl p-10 shadow-xl hover:shadow-2xl transition"
       >
-        <h1 className="text-4xl font-bold py-4">
+        <h1 className="text-4xl font-semibold py-4">
           Let’s <span className="text-pink-500 italic">Get In</span> Touch.
         </h1>
         <p className="text-gray-500 pb-10">

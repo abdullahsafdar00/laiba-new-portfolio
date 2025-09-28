@@ -1,10 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const BookConsultation = () => {
   const [form, setForm] = useState({ name: "", email: "" });
+  const [selectedDate, setSelectedDate] = useState(null); // date-only
+  const [selectedTime, setSelectedTime] = useState(null); // time string like '09:00'
   const [loading, setLoading] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState([]); // array of ISO strings
+  const [serverAvailable, setServerAvailable] = useState(true);
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -18,7 +24,43 @@ const BookConsultation = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Instead of placing order, redirect to payment page with user info and plan
+      // Validate date + time selection
+      if (!selectedDate || !selectedTime) {
+        toast.error('Please pick a date and a time slot.');
+        setLoading(false);
+        return;
+      }
+      // construct Date object from selectedDate + selectedTime (local)
+      const [hours, minutes] = selectedTime.split(':').map(Number);
+      const slot = new Date(selectedDate);
+      slot.setHours(hours, minutes, 0, 0);
+      if (slot < new Date()) {
+        toast.error('Please choose a future slot.');
+        setLoading(false);
+        return;
+      }
+
+      const slotISO = slot.toISOString();
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+
+      // Check availability via server
+      try {
+        const checkRes = await fetch(`http://localhost:5000/api/bookings/availability?slot=${encodeURIComponent(slotISO)}`);
+        const checkJson = await checkRes.json();
+        if (!checkRes.ok || checkJson.available === false) {
+          toast.error(checkJson.message || 'Requested slot is not available. Please pick another time.');
+          setLoading(false);
+          // refresh slots for the month/day
+          fetchBookedSlots(selectedDate || new Date());
+          return;
+        }
+      } catch (err) {
+        console.error('Availability check failed', err);
+        toast.error('Could not verify availability. Try again later.');
+        setLoading(false);
+        return;
+      }
+
       navigate("/purchase-plan", {
         state: {
           plan: {
@@ -28,11 +70,66 @@ const BookConsultation = () => {
             note: "A 30-minute video call with our expert designer.",
           },
           user: { name: form.name, email: form.email },
+          bookingDateTime: slotISO,
+          bookingTimezone: timezone,
         },
       });
     } finally {
       setLoading(false);
     }
+  };
+
+  // Fetch booked slots for a given month range (visible month)
+  const fetchBookedSlots = async (visibleDate) => {
+    try {
+      const start = new Date(visibleDate.getFullYear(), visibleDate.getMonth(), 1);
+      const end = new Date(visibleDate.getFullYear(), visibleDate.getMonth() + 1, 0, 23, 59, 59);
+      const res = await fetch(`http://localhost:5000/api/bookings/slots?start=${encodeURIComponent(start.toISOString())}&end=${encodeURIComponent(end.toISOString())}`);
+      const json = await res.json();
+      if (res.ok && json.slots) {
+        setBookedSlots(json.slots || []);
+        setServerAvailable(true);
+      } else {
+        setBookedSlots([]);
+      }
+    } catch (err) {
+      console.error('Failed to fetch booked slots', err);
+      setBookedSlots([]);
+      setServerAvailable(false);
+    }
+  };
+
+  useEffect(() => {
+    // initial fetch for current month
+    fetchBookedSlots(new Date());
+  }, []);
+
+  // helpers for react-datepicker
+  const isTimeDisabled = (date) => {
+    // date is a Date object representing a time on the selected day
+    const iso = new Date(date).toISOString();
+    // Normalize to minute precision
+    const trimmed = iso.slice(0,16); // YYYY-MM-DDTHH:mm
+    return bookedSlots.some(s => s.slice(0,16) === trimmed);
+  };
+
+  const handleMonthChange = (date) => {
+    fetchBookedSlots(date);
+  };
+
+  // Generate time slots between business hours (09:00 - 18:00) at 30-min intervals for a date
+  const generateTimeSlots = (date) => {
+    const slots = [];
+    const start = new Date(date);
+    start.setHours(9,0,0,0);
+    const end = new Date(date);
+    end.setHours(18,0,0,0);
+    let cur = new Date(start);
+    while (cur <= end) {
+      slots.push(new Date(cur));
+      cur = new Date(cur.getTime() + 30 * 60 * 1000);
+    }
+    return slots;
   };
 
   const handleMouseMove = (e) => {
@@ -44,14 +141,24 @@ const BookConsultation = () => {
     <section className="min-h-screen bg-white px-4 py-20 flex items-center justify-center">
       <div className="flex flex-col lg:flex-row gap-10 w-full max-w-6xl items-center justify-center">
         {/* Form Card */}
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl z-50 p-10">
+        <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl z-30 p-10">
           <h1 className="text-4xl font-bold text-pink-600 mb-4 text-center">Book a Consultation</h1>
+          {!serverAvailable && (
+            <div className="mb-4 border-l-4 border-red-400 bg-red-50 p-3 text-sm text-red-700">
+              Booking server is unreachable. Live availability checks are disabled.
+              <button
+                type="button"
+                onClick={() => { setServerAvailable(true); fetchBookedSlots(new Date()); }}
+                className="ml-3 underline text-red-700"
+              >Retry</button>
+            </div>
+          )}
           <p className="text-center text-gray-600 mb-8">
             Get a <span className="font-semibold text-pink-500">30-minute personal call</span> for just <span className="font-bold">$20</span>.
             <br />
             Ask anything about design, branding, or your project!
           </p>
-          <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block font-medium mb-1">Full Name</label>
               <input
@@ -75,6 +182,46 @@ const BookConsultation = () => {
                 placeholder="Your Email"
                 required
               />
+            </div>
+            <div>
+              <label className="block font-medium mb-1">Preferred Date & Time</label>
+              <DatePicker
+                selected={selectedDate}
+                onChange={(d) => { setSelectedDate(d); setSelectedTime(null); }}
+                dateFormat="MMMM d, yyyy"
+                placeholderText="Pick a date"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2"
+                minDate={new Date()}
+                onMonthChange={handleMonthChange}
+                inline={false}
+              />
+              {/* Time selection grid */}
+              <div className="mt-4">
+                <div className="text-sm font-medium mb-2">Available Times <span className="text-xs text-gray-400">({Intl.DateTimeFormat().resolvedOptions().timeZone})</span></div>
+                {selectedDate ? (
+                  <div className="grid grid-cols-3 gap-2 max-h-64 overflow-auto">
+                    {generateTimeSlots(selectedDate).map(ts => {
+                      const iso = ts.toISOString();
+                      const disabled = bookedSlots.some(s => s.slice(0,16) === iso.slice(0,16));
+                      const label = ts.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                      const isSelected = selectedTime === `${String(ts.getHours()).padStart(2,'0')}:${String(ts.getMinutes()).padStart(2,'0')}`;
+                      return (
+                        <button
+                          key={iso}
+                          type="button"
+                          disabled={disabled}
+                          onClick={() => setSelectedTime(`${String(ts.getHours()).padStart(2,'0')}:${String(ts.getMinutes()).padStart(2,'0')}`)}
+                          className={`px-3 py-2 text-sm rounded ${disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : isSelected ? 'bg-pink-600 text-white' : 'bg-white border border-gray-200 hover:bg-pink-50'}`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-500">Pick a date to see available times.</div>
+                )}
+              </div>
             </div>
             <button
               type="submit"

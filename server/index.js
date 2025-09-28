@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const orderRoutes = require("./routes/orderRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const messagesRoute = require("./routes/messageRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 const crypto = require('crypto');
 
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => res.send("API Running"));
 app.use("/api/orders", orderRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/messages", messagesRoute);
+app.use('/api/bookings', bookingRoutes);
 
 app.post('/api/tco-signature', (req, res) => {
   const { amount, currency, billingEmail } = req.body;

@@ -1,190 +1,120 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, useTexture } from '@react-three/drei';
-import * as THREE from 'three';
+import React from 'react'
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import projects from '../data/projects';
 
-const IMAGE_URLS = [
-  'https://i.imgur.com/qn7TzJW.jpeg',
-  'https://i.imgur.com/EuZP7xS.jpeg',
-  'https://i.imgur.com/6WJF6uM.jpeg',
-];
+const Portfolio = ({ preview = false }) => {
 
-const ImageSegment = ({ texture, angle, radius, gap, segmentAngle }) => {
-  const geometry = new THREE.CylinderGeometry(
-    radius,
-    radius,
-    4,
-    64,
-    5,
-    true,
-    angle + gap / 3,
-    segmentAngle - gap
-  );
+  const displayedProjects = preview ? projects.slice(0, 4) : projects;
 
   return (
-    <mesh>
-      <primitive object={geometry} attach="geometry" />
-      <meshStandardMaterial map={texture} side={THREE.DoubleSide} />
-    </mesh>
-  );
-};
+  <div
+      className={`w-full min-h-screen px-4 sm:px-6 lg:px-8 py-16 transition-colors duration-500 overflow-x-hidden`}
+    >
+     <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="text-center mb-20"
+>
+  <h2 className="text-4xl sm:text-5xl font-semibold bg-pink-600 bg-clip-text text-transparent">
+    My Creative Projects
+  </h2>
+  <p className="mt-4 text-black text-lg max-w-2xl mx-auto">
+    A selection of my favorite design work — blending creativity with strategy.
+  </p>
+</motion.div>
 
-const StaticCylinder = ({ rotation }) => {
-  const groupRef = useRef();
-  const textures = useTexture(IMAGE_URLS);
-  const radius = 3.5;
-  const gap = 0.02;
-  const segmentAngle = (2 * Math.PI) / textures.length;
 
-  useFrame(() => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = rotation.current.y;
-      groupRef.current.rotation.x = rotation.current.x;
-    }
-  });
+      {/* Projects List */}
+      <div className="space-y-20 max-w-7xl mx-auto">
+        {displayedProjects.map((project, idx) => {
+          const isEven = idx % 2 === 1;
+          return (
+            <motion.div
+              key={idx}
+              className={`flex flex-col lg:flex-row items-center gap-10 ${
+                isEven ? "lg:flex-row-reverse" : ""
+              }`}
+              initial={{ opacity: 0, x: isEven ? 50 : -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.05 }}
+              viewport={{ once: false }}
+            >
+              {/* Text Content */}
+              <div className="flex-1">
+                <h3
+                  className={`text-2xl font-bold mb-4 text-pink-600`}
+                >
+                  {project.title}
+                </h3>
+                <p
+                  className={`mb-4 text-pink-700`}
+                >
+                  {project.description}
+                </p>
 
-  return (
-    <group ref={groupRef}>
-      {textures.map((texture, i) => {
-        const angle = i * segmentAngle;
-        return (
-          <ImageSegment
-            key={i}
-            texture={texture}
-            angle={angle}
-            radius={radius}
-            gap={gap}
-            segmentAngle={segmentAngle}
-          />
-        );
-      })}
-    </group>
-  );
-};
+                {/* Skills */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.skills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className={`px-3 py-1 text-sm rounded-full border
+                        border-pink-600  bg-pink-100 text-pink-700 font-medium shadow-sm
+                         
+                      `}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
 
-const Portfolio = () => {
-  const rotation = useRef({ x: 0, y: 0 });
-  const dragOffset = useRef({ x: 0, y: 0 });
-  const lastPos = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [showHint, setShowHint] = useState(true);
+                {/* View Button */}
+                <Link
+                  to={`/project/${project.slug}`}
+                  className={`inline-flex items-center gap-2 px-5 py-2 font-medium rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition-all duration-300`}
+                >
+                  View Project
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+  </svg>
+                </Link>
+              </div>
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const scrollVal = window.scrollY || window.pageYOffset;
-      rotation.current.y = scrollVal * 0.002 + dragOffset.current.y;
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    const handlePointerDown = (e) => {
-      lastPos.current = {
-        x: e.clientX || e.touches?.[0]?.clientX,
-        y: e.clientY || e.touches?.[0]?.clientY,
-      };
-      setShowHint(false); // hide on user interaction
-    };
-
-    const handlePointerMove = (e) => {
-      if (!lastPos.current) return;
-
-      const current = {
-        x: e.clientX || e.touches?.[0]?.clientX,
-        y: e.clientY || e.touches?.[0]?.clientY,
-      };
-
-      const deltaX = current.x - lastPos.current.x;
-      const deltaY = current.y - lastPos.current.y;
-
-      dragOffset.current.y += deltaX * 0.005;
-      dragOffset.current.x += deltaY * 0.005;
-
-      dragOffset.current.x = Math.max(
-        -Math.PI / 4,
-        Math.min(Math.PI / 4, dragOffset.current.x)
-      );
-
-      rotation.current.y = window.scrollY * 0.002 + dragOffset.current.y;
-      rotation.current.x = dragOffset.current.x;
-
-      lastPos.current = current;
-    };
-
-    const clear = () => (lastPos.current = null);
-
-    window.addEventListener('mousedown', handlePointerDown);
-    window.addEventListener('mousemove', handlePointerMove);
-    window.addEventListener('mouseup', clear);
-
-    window.addEventListener('touchstart', handlePointerDown, { passive: true });
-    window.addEventListener('touchmove', handlePointerMove, { passive: true });
-    window.addEventListener('touchend', clear);
-
-    return () => {
-      window.removeEventListener('mousedown', handlePointerDown);
-      window.removeEventListener('mousemove', handlePointerMove);
-      window.removeEventListener('mouseup', clear);
-
-      window.removeEventListener('touchstart', handlePointerDown);
-      window.removeEventListener('touchmove', handlePointerMove);
-      window.removeEventListener('touchend', clear);
-    };
-  }, []);
-
-  // Auto hide after 6 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => setShowHint(false), 6000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <section className=" hidden w-full min-h-screen bg-white flex-col items-center justify-start pt-8 relative mb-32">
-      <h2 className="text-3xl sm:text-4xl font-bold text-center text-pink-500">
-        Designs
-      </h2>
-      <p className="text-sm sm:text-base text-slate-500 text-center mb-6 max-w-xl mx-auto px-4">
-        A 3D visual spotlight on our people — clean, modern, scroll or swipe in any direction.
-      </p>
-
-      <div className="w-full h-[90vh] sm:h-[90vh] px-2 sm:px-10 relative">
-        <Canvas camera={{ position: [0, 5, isMobile ? 10 : 8], fov: isMobile ? 55 : 50 }}>
-          <ambientLight intensity={0.6}/>
-          <directionalLight position={[5, 5, 5]} />
-          <StaticCylinder rotation={rotation}  />
-          <OrbitControls
-            enableZoom={false}
-            enableRotate={false}
-            enablePan={false}
-          />
-        </Canvas>
-        <Link to='/designs' className='flex justify-center text-center items-center mt-20'>
-          <button className='border-2 border-pink-500 p-4 rounded-4xl text-pink-500 font-bold active:scale-90'>See More Designs</button>
-        </Link>
-
-        {/* SWIPE HINT OVERLAY */}
-        {showHint && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none animate-fade-in z-10">
-            <div className="flex gap-8 mb-2 opacity-70">
-              <div className="animate-bounce-left text-4xl text-slate-400">⬅️</div>
-              <div className="animate-bounce-right text-4xl text-slate-400">➡️</div>
-            </div>
-            <p className="text-center text-sm text-slate-500">Swipe or drag to rotate</p>
-          </div>
-        )}
+              {/* Image */}
+              <div className="flex-1">
+                <img
+                  src={project.img}
+                  alt={project.title}
+                  className="h-72 w-full object-cover rounded-xl shadow-lg"
+                />
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
-    </section>
-  
-  );
-};
 
-export default Portfolio;
+      {/* Show More button (only in preview mode) */}
+      {preview && (
+        <div className="text-center mt-12">
+          <Link
+            to="/designs"
+            className={`inline-block px-6 py-3 font-semibold rounded-lg border-2 border-pink-500 text-pink-600 hover:bg-pink-500 hover:text-white transition-all duration-300`}
+          >
+            Show More
+          </Link>
+        </div>
+      )}
+
+      {/* Divider */}
+      {!preview && (
+        <span
+          className={`h-0.5 w-full block mt-16 transition-colors duration-500 `}
+        ></span>
+      )}
+    </div>
+  )
+}
+
+export default Portfolio

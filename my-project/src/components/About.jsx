@@ -1,82 +1,100 @@
 import React from "react";
-
-const brandIcons = [
-  { src: '/1.png', alt: 'Brand 1' },
-  { src: '/2.png', alt: 'Brand 2' },
-  { src: '/3.png', alt: 'Brand 3' },
-  { src: '/4.png', alt: 'Brand 4' },
-  { src: '/5.png', alt: 'Brand 5' },
-  { src: '/6.png', alt: 'Brand 6' },
-  { src: '/7.png', alt: 'Brand 7' },
-  { src: '/8.png', alt: 'Brand 8' },
-];
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 export default function About() {
-  // Repeat icons 4 times for a seamless loop
-  const icons = Array(4).fill(brandIcons).flat();
-
   return (
-    <section className="text-center px-4 py-12 sm:py-16 lg:py-20 bg-white text-slate-800">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mt-4 leading-tight px-2">
-        We build <span className="text-pink-500 italic">Design</span> that works.
-      </h2>
-      <p className="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto mt-4 sm:mt-6 text-gray-500 text-sm sm:text-base md:text-lg px-2">
-        I am passionate about delivering fast, beautiful, and reusable solutions that meet modern design needs. I have worked for my clients on different platforms.
-      </p>
+    <section className="relative px-6 sm:px-12 lg:px-24 py-20 bg-gradient-to-b from-white via-pink-50/40 to-white text-slate-800 overflow-hidden">
       
-      {/* Logo Marquee */}
-      <div className="overflow-hidden w-full relative max-w-7xl mx-auto select-none mt-8 sm:mt-12 lg:mt-16">
-        {/* Left fade */}
-        <div className="absolute left-0 top-0 h-full w-6 sm:w-12 md:w-16 lg:w-20 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />
-        
-        {/* Marquee container */}
-        <div className="marquee-inner flex items-center h-16 sm:h-24 md:h-32 lg:h-40 xl:h-48">
-          {icons.map((icon, idx) => (
-            <div className="inline-block mx-1 sm:mx-2 md:mx-3 lg:mx-4 flex-shrink-0" key={icon.alt + idx}>
-              <img
-                src={icon.src}
-                alt={icon.alt}
-                className="h-20 w-16 sm:h-32 sm:w-24 md:h-40 md:w-28 lg:h-48 lg:w-32 xl:h-56 xl:w-40 object-contain"
-                style={{ aspectRatio: '3/4' }}
-                draggable={false}
-              />
+    
+
+      {/* Main Heading */}
+      <motion.div 
+        className="text-center mb-16 relative z-10"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-pink-600 mb-3">
+          <Sparkles className="w-4 h-4" /> Who I Am
+        </span>
+        <h2 className="text-4xl sm:text-5xl flex flex-col md:text-6xl font-semibold leading-tight">
+          Crafting Bold Visual Stories <span className="bg-pink-600 bg-clip-text text-transparent">That Inspire & Connect</span>
+        </h2>
+        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+          Transforming brands with stunning visuals & intuitive user interfaces that leave a lasting impression.
+        </p>
+      </motion.div>
+
+      {/* Flex Layout (70/30) */}
+      <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 relative z-10">
+        {/* Left - Text (70%) */}
+        <motion.div 
+          className="w-full lg:w-[70%] space-y-6"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h3 className="text-3xl sm:text-4xl font-semibold text-slate-900 leading-snug">
+            Turning <span className="text-pink-600">Ideas</span> Into Seamless <br/>{" "}
+            <span className="bg-pink-600 bg-clip-text text-transparent">User Journeys</span>
+          </h3>
+          
+          <p className="text-gray-600 text-lg leading-relaxed">
+            Hi! I’m <span className="font-semibold text-xl text-pink-500">Laiba</span>, a passionate Graphic Designer who transforms ideas into compelling visuals. From branding and packaging to digital campaigns and social media content, I help businesses create designs that not only look stunning but also communicate their message effectively
+          </p>
+
+          {/* Stats Section */}
+          <div className="flex gap-6 py-6">
+            <div className="flex-1 rounded-2xl p-6 text-center">
+              <h4 className="text-3xl font-bold text-pink-600">150+</h4>
+              <p className="text-gray-500 mt-1">Projects Completed</p>
             </div>
-          ))}
-        </div>
-        
-        {/* Right fade */}
-        <div className="absolute right-0 top-0 h-full w-6 sm:w-12 md:w-16 lg:w-20 z-10 pointer-events-none bg-gradient-to-l from-white to-transparent" />
+            <div className="flex-1 rounded-2xl p-6 text-center">
+              <h4 className="text-3xl font-bold text-pink-600">100+</h4>
+              <p className="text-gray-500 mt-1">Happy Clients</p>
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a 
+              href="#contact" 
+              className="inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-full text-white bg-pink-600 hover:opacity-90 transition-all duration-300 shadow-lg"
+            >
+              Let’s Collaborate
+            </a>
+            <a 
+              href="/designs" 
+              className="inline-flex items-center justify-center px-6 py-3 border-2 border-pink-500 text-base font-medium rounded-full text-pink-600 hover:bg-pink-50 transition-colors duration-300"
+            >
+              View My Work
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Right - Image (30%) */}
+        <motion.div 
+          className="w-full lg:w-[40%]"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img
+            src="/laiba.jpg"
+            alt="Laiba - Graphic Designer"
+          />
+        </motion.div>
       </div>
-      
-      {/* Animation Styles */}
-      <style>{`
-        .marquee-inner {
-          animation: marqueeScroll 10s linear infinite;
-        }
-        
-        @media (max-width: 640px) {
-          .marquee-inner {
-            animation-duration: 10s;
-          }
-        }
-        
-        @media (min-width: 1024px) {
-          .marquee-inner {
-            animation-duration: 10s;
-          }
-        }
-        
-        @keyframes marqueeScroll {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        
-      `}</style>
+      <style>
+        {`
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+                    * {
+                        font-family: 'Poppins', sans-serif;
+                    }
+        `}
+      </style>
     </section>
   );
 }

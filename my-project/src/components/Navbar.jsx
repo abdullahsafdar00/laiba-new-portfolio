@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
-import { Menu, X, Home, FolderOpen, Settings, Star, DollarSign, User, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, X, Home, FolderOpen,  Star,  User, Mail, ClipboardList } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollToSection = (sectionId) => {
+  
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    
+  };
+
   const menuItems = [
-    { name: 'Home', href: '#home', icon: Home },
+    { name: 'Home', href: '/', icon: Home },
     { name: 'Portfolio', href: '#portfolio', icon: FolderOpen },
-    { name: 'Services', href: '#services', icon: Settings },
+    { name: 'Services', href: '/services', icon: ClipboardList },
     { name: 'Testimonials', href: '#testimonials', icon: Star },
-    { name: 'Pricing', href: '#pricing', icon: DollarSign },
-    { name: 'Book a Consultation', href: '/book-consultation', icon: User },
     { name: 'About', href: '#about', icon: User },
     { name: 'Contact', href: '#contact', icon: Mail }
   ];
 
   return (
-    <nav className="h-[70px] relative w-full px-4 sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-50 bg-white text-gray-700 shadow-[0px_4px_25px_0px_#0000000D] transition-all">
+    <nav className="h-[70px] w-full px-4 fixed bg-transparent backdrop-blur-md sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-50 text-gray-700 transition-all">
       
       {/* Logo */}
       <a href="#home" className="text-pink-600 flex-shrink-0">
@@ -30,29 +39,50 @@ const Navbar = () => {
       {/* Desktop Menu */}
       <div className="hidden lg:flex items-center gap-8">
         {menuItems.map((item) => (
-          <a
-            key={item.name}
-            href={item.href}
-            className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300"
-          >
-            <span className="block group-active:scale-90 transition-transform duration-300">
-              {item.name}
-            </span>
-            {/* <span className="block absolute top-full left-0 group-hover:translate-y-[-100%] transition-transform duration-300">
-              {item.name}
-            </span> */}
-          </a>
+          item.href.startsWith('#') ? (
+            <a
+              key={item.name}
+              href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(item.href.slice(1));
+              }}
+              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300"
+            >
+              <span className="block text-xl group-active:scale-90 transition-transform duration-300">
+                {item.name}
+              </span>
+            </a>
+          ) : (
+            <Link
+              key={item.name}
+              to={item.href}
+              onClick={() => {
+                if (item.href.includes('#')) {
+                  setTimeout(() => {
+                    const hash = item.href.split('#')[1];
+                    scrollToSection(hash);
+                  }, 0);
+                }
+              }}
+              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300"
+            >
+              <span className="block text-xl group-active:scale-90 transition-transform duration-300">
+                {item.name}
+              </span>
+            </Link>
+          )
         ))}
       </div>
 
       {/* Desktop CTA Button */}
       <div className="hidden lg:flex items-center">
-        <a
-          href="/book-consultation"
-          className="border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300"
+        <Link
+          to="/book-consultation"
+          className="bg-pink-500 hover:shadow-[0px_0px_30px_14px] shadow-[0px_0px_30px_7px] hover:shadow-white/50 shadow-white/50 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-pink-400 transition duration-300"
         >
           Book a Consultation
-        </a>
+        </Link>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -75,26 +105,50 @@ const Navbar = () => {
           {menuItems.map((item) => {
             const IconComponent = item.icon;
             return (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 px-4 py-3 rounded-lg transition-all duration-300"
-              >
-                <IconComponent className="w-5 h-5" />
-                <span className="font-medium">{item.name}</span>
-              </a>
+              item.href.startsWith('#') ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.href.slice(1));
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 px-4 py-3 rounded-lg transition-all duration-300"
+                >
+                  <IconComponent className="w-5 h-5" />
+                  <span className="font-medium">{item.name}</span>
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => {
+                    if (item.href.includes('#')) {
+                      setTimeout(() => {
+                        const hash = item.href.split('#')[1];
+                        scrollToSection(hash);
+                      }, 0);
+                    }
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 text-gray-700 hover:text-pink-500 hover:bg-pink-50 px-4 py-3 rounded-lg transition-all duration-300"
+                >
+                  <IconComponent className="w-5 h-5" />
+                  <span className="font-medium">{item.name}</span>
+                </Link>
+              )
             );
           })}
           <div className="pt-4 border-t border-gray-100">
-            <a
-              href="#contact"
+            <Link
+              to="/book-consultation"
               onClick={() => setIsMenuOpen(false)}
               className="flex items-center justify-center gap-2 bg-pink-500 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-pink-600 transition-all duration-300"
             >
               <Mail className="w-4 h-4" />
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </div>

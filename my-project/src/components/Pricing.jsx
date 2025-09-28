@@ -55,9 +55,9 @@ const Pricing = () => {
 
   return (
     <section className="py-20 px-4 max-w-7xl mx-auto items-center" id="pricing">
-      <h1 className="text-center text-5xl font-bold text-pink-500">Pricing</h1>
-      <p className="text-center text-gray-500 mt-2 max-w-xl mx-auto">
-        Choose the plan that fits your teams size and needs.
+      <h1 className="text-center text-5xl font-semibold text-pink-600">Flexible Plans for Your Design Needs</h1>
+      <p className="text-center text-black mt-2 max-w-xl mx-auto">
+        Choose a plan that fits your project — pay only for what you need.
       </p>
 
 
@@ -114,7 +114,7 @@ const Pricing = () => {
                   className="w-full rounded-lg border-2 border-pink-600 px-4 py-2 text-white hover:opacity-90 transition-all hover:text-pink-600 hover:bg-transparent duration-300 bg-pink-600 font-semibold"
                   onClick={() => handleChoosePlan(plan)}
                 >
-                  {`Choose ${plan.name}`}
+                 Request Quote
                 </button>
               </div>
             </div>

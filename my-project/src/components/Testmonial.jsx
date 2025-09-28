@@ -115,6 +115,36 @@ const Testimonial = () => {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  // Video ref + autoplay when visible (improves performance on mobile)
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl || typeof IntersectionObserver === 'undefined') return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // try to play; modern browsers require muted for autoplay
+            const playPromise = videoEl.play();
+            if (playPromise && typeof playPromise.then === 'function') {
+              playPromise.catch(() => {
+                // ignore play errors (will stay paused, user can press play)
+              });
+            }
+          } else {
+            videoEl.pause();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    io.observe(videoEl);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <>
       <style>{`
@@ -138,7 +168,7 @@ const Testimonial = () => {
 
       <section className="bg-white py-16 overflow-hidden md:w-6xl md:mx-auto">
         <div className="text-center mb-12 px-4">
-          <h2 className="text-3xl sm:text-4xl font-bold text-pink-500 italic"> <span className='text-slate-800'>What Our</span> Clients <span className='text-slate-800'>Say</span></h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-pink-500 italic"> <span className='text-slate-800'>What Our</span> Clients <span className='text-slate-800'>Say</span></h2>
           <p className="mt-2 text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
             Hear directly from our satisfied clients who’ve experienced our service firsthand.
           </p>
@@ -164,6 +194,23 @@ const Testimonial = () => {
           </div>
           <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-gray-50 to-transparent z-50 pointer-events-none" />
           <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-gray-50 to-transparent z-50 pointer-events-none" />
+        </div>
+
+        {/* Testimonial video */}
+        <div className="mt-8 px-4 w-full flex justify-center">
+          <div className="w-full bg-[#D5B9A4] shadow-xs rounded-xl">
+            <video
+              ref={videoRef}
+              src="/testinomailvideo.mp4"
+              className="w-full h-[500px] object-contain block"
+              playsInline
+              muted
+              loop
+              preload="metadata"
+              controls
+              aria-label="Testimonial video from a client"
+            />
+          </div>
         </div>
       </section>
     </>

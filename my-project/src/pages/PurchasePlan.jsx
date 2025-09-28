@@ -37,7 +37,7 @@ const Progress = ({ step }) => (
   </div>
 );
 
-const PaymentForm = ({ plan, form, setForm, loading, setLoading, navigate }) => {
+const PaymentForm = ({ plan, form, setForm, loading, setLoading, navigate, bookingDateTime }) => {
   const [step, setStep] = useState(1);
 
   const handleChange = (e) => {
@@ -80,7 +80,9 @@ const PaymentForm = ({ plan, form, setForm, loading, setLoading, navigate }) => 
           email: form.email,
           items: [plan.name],
           total: plan.price.replace("$", ""),
-              paymentToken: tokenResponse.token,
+          bookingDateTime: bookingDateTime || null,
+          bookingTimezone: bookingTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+          paymentToken: tokenResponse.token,
         }),
       });
           if (orderRes.ok) {
@@ -186,6 +188,8 @@ const PurchasePlan = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { plan, user } = location.state || {};
+  const bookingDateTime = location.state?.bookingDateTime || null;
+  const bookingTimezone = location.state?.bookingTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [form, setForm] = useState({ name: user?.name || "", email: user?.email || "" });
   const [loading, setLoading] = useState(false);
 
@@ -197,7 +201,7 @@ const PurchasePlan = () => {
     <section className="min-h-screen flex items-center justify-center bg-white px-2 py-8 md:px-4 md:py-20">
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 bg-white rounded-2xl shadow-none p-0 overflow-hidden">
         {/* Left: Plan Details */}
-        <div className="flex flex-col justify-between p-6 md:p-8 bg-white rounded-2xl shadow-2xl z-50">
+        <div className="flex flex-col justify-between p-6 md:p-8 bg-white rounded-2xl z-30">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-pink-600 mb-1">{plan.name}</h1>
             <span className="inline-block bg-pink-100 text-pink-600 px-3 py-1 rounded-full font-semibold text-base mb-1">
@@ -218,8 +222,17 @@ const PurchasePlan = () => {
           </button>
         </div>
         {/* Right: Payment Form */}
-        <div className="flex flex-col justify-center p-6 md:p-8 bg-white rounded-2xl shadow-2xl z-40">
-          <PaymentForm plan={plan} form={form} setForm={setForm} loading={loading} setLoading={setLoading} navigate={navigate} />
+        <div className="flex flex-col justify-center p-6 md:p-8 bg-white rounded-2xl  z-40">
+            <div className="mb-4">
+              {bookingDateTime ? (
+                  <div className="bg-pink-50 border border-pink-100 p-3 rounded mb-4 text-sm">
+                    <strong>Requested slot:</strong> {new Date(bookingDateTime).toLocaleString()} <span className="text-xs text-gray-400">({bookingTimezone})</span>
+                  </div>
+                ) : (
+                  <div className="text-sm text-gray-500 mb-4">No specific date/time requested.</div>
+                )}
+            </div>
+            <PaymentForm plan={plan} form={form} setForm={setForm} loading={loading} setLoading={setLoading} navigate={navigate} bookingDateTime={bookingDateTime} />
         </div>
       </div>
     </section>

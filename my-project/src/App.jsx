@@ -1,63 +1,41 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import Login from "./pages/Login";
-import AdminDashboard from "./pages/AdminDashboard";
-import Navbar from "./components/Navbar";
-import Pricing from "./components/Pricing";
 import Portfolio from "./components/Portfolio";
 import Hero from "./components/Hero";
-import Services from "./components/Services";
 import Testmonial from "./components/Testmonial";
+import LetsTalk from "./components/LetsTalk";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import OrderSuccessPage from "./pages/OrderPlaced";
-import MessageSent from "./pages/MessageSent"; 
-import DesignGallery from "./pages/DesignGallery";
-import BookConsultation from "./pages/BookConsultation";
-import PurchasePlan from "./pages/PurchasePlan";
+import Services from "./pages/Services";
+import Navbar from "./components/Navbar";
+import Pricing from "./components/Pricing";
+import CTA from "./components/CTA";
+import FAQ from "./components/FAQ'S";
+import FAQCTA from "./components/FaqCta";
 
 
 // Main landing website
-const MainWebsite = () => {
-  return (
-    <>
-      <Navbar />
-      <Hero />
-      <Portfolio />
-      <Services />
-      <Testmonial />
-      
-      <Pricing />
-      <Contact />
-      <About />
-      <Footer />
-    </>
-  );
-};
-
 const App = () => {
-  const isAdmin = localStorage.getItem("admin") === "true";
-
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainWebsite />} />
-        <Route path="/admin/login" element={<Login />} />
-        <Route
-          path="/admin/dashboard/*"
-          element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin/login" />}
-        />
-        
-        <Route path="/order-success" element={<OrderSuccessPage />} />
-        <Route path="*" element={<Navigate to="/" />} />
-         <Route path="/designs" element={<DesignGallery />} />
-        <Route path="/message-sent" element={<MessageSent />} />
-        <Route path="/book-consultation" element={<BookConsultation />} />
-        <Route path="/purchase-plan" element={<PurchasePlan />} />
-      </Routes>
-    </Router>
+    <div className="flex flex-col min-h-screen">
+     <Navbar/>
+      <main>
+        <section id="home"><Hero /></section>
+        <section id="about"><About /></section>
+        <section id="services"><Services/></section>
+        <section id="portfolio"><Portfolio  preview={true} /></section>
+  <section id="testimonials"><Testmonial /></section>
+  <section id="pricing"> <Pricing/></section>
+  <section id="cta"> <CTA/> </section>
+  <section id="let-start"><LetsTalk /></section>
+  <section id="faq"> <FAQ/> </section>
+  <section id="FaqCta"> <FAQCTA/> </section>
+        <section id="contact"><Contact /></section>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
-export default App;
+export default  App;

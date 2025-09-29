@@ -168,7 +168,7 @@ const Testimonial = () => {
 
       <section className="bg-white py-16 overflow-hidden md:w-6xl md:mx-auto">
         <div className="text-center mb-12 px-4">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-pink-500 italic"> <span className='text-slate-800'>What Our</span> Clients <span className='text-slate-800'>Say</span></h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-pink-500"> <span className='text-slate-800'>What Our</span> Clients <span className='text-slate-800'>Say</span></h2>
           <p className="mt-2 text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
             Hear directly from our satisfied clients who’ve experienced our service firsthand.
           </p>
@@ -204,7 +204,6 @@ const Testimonial = () => {
               src="/testinomailvideo.mp4"
               className="w-full h-[500px] object-contain block"
               playsInline
-              muted
               loop
               preload="metadata"
               controls

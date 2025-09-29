@@ -56,12 +56,12 @@ html, body, #root {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #db2777; /* pink-600 color */
+  background: transparent; /* pink-600 color */
   border-radius: 6px; /* Optional: rounded corners for the thumb */
 }
 
 /* For Firefox */
 html {
-  scrollbar-color: #db2777 #f1f1f1; /* thumb color track color */
+  scrollbar-color: transparent #f1f1f1; /* thumb color track color */
   scrollbar-width: thin; /* auto, thin, none */
 }

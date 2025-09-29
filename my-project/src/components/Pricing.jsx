@@ -93,7 +93,16 @@ const Pricing = () => {
                 </ul>
               </div>
               <div className="p-6 border-t">
-                <button className="w-full rounded-full bg-pink-600 text-white py-3 font-semibold hover:bg-pink-700 transition" onClick={() => handleChoosePlan(plan)}>Request a Quote</button>
+                <a
+                  href="#letstalk"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('letstalk')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="w-full rounded-full bg-pink-600 text-white py-3 font-semibold hover:bg-pink-700 transition block text-center"
+                >
+                  Request a Quote
+                </a>
               </div>
             </div>
           </div>

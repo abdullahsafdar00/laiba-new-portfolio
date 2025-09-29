@@ -20,8 +20,8 @@ const contactDetails = [
   {
     icon: Linkedin,
     label: "LinkedIn",
-    value: "linkedin.com/in/laiba",
-    href: "https://linkedin.com/in/laiba", // Update as needed
+    value: "linkedin.com/in/laiba-safdar-amazon-design-expert-graphic-designer",
+    href: "linkedin.com/in/laiba-safdar-amazon-design-expert-graphic-designer", // Update as needed
   },
   {
     icon: Instagram,
@@ -60,7 +60,6 @@ export default function Contact() {
       if (res.ok) {
         toast.success("Message sent successfully!");
         setFormData({ name: "", email: "", content: "" });
-        navigate("/message-sent");
       } else {
         toast.error("Something went wrong. Please try again later.");
       }
@@ -79,10 +78,10 @@ export default function Contact() {
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full md:w-1/2 bg-white pl-10 pt-10 h-[500px] z-30 rounded-2xl shadow-xl hover:shadow-2xl transition"
+        className="w-full md:w-1/2 bg-white pl-10 pt-10 h-[550px] rounded-2xl  hover:shadow-2xl shadow-xl transition"
       >
         <h2 className="text-3xl font-semibold mb-6">
-          <span className="text-pink-500 italic">Contact</span> Information
+          <span className="text-pink-500">Contact</span> Information
         </h2>
         <ul className="space-y-6">
           {contactDetails.map((item, idx) => (
@@ -97,6 +96,9 @@ export default function Contact() {
             </li>
           ))}
         </ul>
+        <p className="mt-6 italic text-black">
+          Fill the form and We’ll connect with you within 24 hours. If it’s urgent, you can message me on <a href="linkedin.com/in/laiba-safdar-amazon-design-expert-graphic-designer" className="text-pink-600" target="_blank">LinkedIn.</a>
+        </p>
       </motion.div>
 
       {/* Contact Form */}
@@ -105,10 +107,10 @@ export default function Contact() {
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="w-full md:w-1/2 z-30 rounded-2xl p-10 shadow-xl hover:shadow-2xl transition"
+        className="w-full md:w-1/2  rounded-2xl p-10 hover:shadow-xl border border-pink-600 transition"
       >
         <h1 className="text-4xl font-semibold py-4">
-          Let’s <span className="text-pink-500 italic">Get In</span> Touch.
+          Let’s <span className="text-pink-500">Get In</span> Touch.
         </h1>
         <p className="text-gray-500 pb-10">
           Or just reach out manually at{" "}
@@ -156,7 +158,7 @@ export default function Contact() {
 
           {/* Message */}
           <div>
-            <label htmlFor="content" className="font-medium block mb-1">Message</label>
+            <label htmlFor="content" className="font-medium block mb-1">Describe your project</label>
             <textarea
               id="content"
               value={formData.content}

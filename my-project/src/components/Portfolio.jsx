@@ -28,13 +28,14 @@ const Portfolio = ({ preview = false }) => {
 
 
       {/* Projects List */}
-      <div className="space-y-20 max-w-7xl mx-auto">
+      <div className="space-y-20 max-w-7xl mx-auto ">
         {displayedProjects.map((project, idx) => {
           const isEven = idx % 2 === 1;
           return (
             <motion.div
               key={idx}
-              className={`flex flex-col lg:flex-row items-center gap-10 ${
+              className={`flex flex-col lg:flex-row items-center gap-10 border-2 rounded-lg p-2 border-pink-600 lg:border-0
+ ${
                 isEven ? "lg:flex-row-reverse" : ""
               }`}
               initial={{ opacity: 0, x: isEven ? 50 : -50 }}

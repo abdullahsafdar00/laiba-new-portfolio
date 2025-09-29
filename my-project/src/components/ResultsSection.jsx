@@ -71,9 +71,9 @@ const ResultsSection = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-        <ResultMetric Icon={Briefcase}  label="Projects Delivered" end={420} suffix="+" />
+        <ResultMetric Icon={Briefcase}  label="Projects Delivered" end={370} suffix="+" />
         <ResultMetric Icon={Users}  label="Happy Clients" end={210} suffix="+" />
-        <ResultMetric Icon={TrendingUp} label="Avg. Conversion Uplift" end={45} suffix="%" />
+        <ResultMetric Icon={TrendingUp} label="Avg. Conversion Uplift" end={47} suffix="%" />
         <ResultMetric Icon={Clock}  label="Avg. Delivery Time (days)" end={7} suffix="d" />
       </div>
 

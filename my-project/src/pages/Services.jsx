@@ -124,8 +124,7 @@ const Services = () => {
             <p className="text-sm text-gray-600">Select a plan or book a consultation and I'll walk you through the next steps.</p>
           </div>
           <div className="flex gap-3">
-            <Link to="/book-consultation" className="bg-pink-600 text-white px-5 py-3 rounded-full font-medium hover:bg-pink-700 transition">Let’s Start Your Project</Link>
-            <button onClick={openLetsTalk} className="px-5 py-3 rounded-full border border-pink-200 text-pink-600 hover:bg-pink-50 transition">See Plans</button>
+            <a href="#contact" className="bg-pink-600 text-white px-5 py-3 rounded-full font-medium hover:bg-pink-700 cursor-pointer transition">Let’s Start Your Project</a>
           </div>
         </div>
         {/* Booking handled in the static LetsTalk component */}

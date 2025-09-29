@@ -9,7 +9,7 @@ export default function Footer() {
         <div>
           <h2 className="text-xl font-bold text-slate-800 mb-2">Laiba S.</h2>
           <p className="text-slate-500 max-w-xs">
-            Building clean, reusable UI blocks that help you ship faster.
+           Helping Brands to Grow on Amazon with Optimized Visual Content | Amazon Design Expert
           </p>
         </div>
 

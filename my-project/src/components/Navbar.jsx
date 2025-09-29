@@ -21,15 +21,15 @@ const Navbar = () => {
 
   const menuItems = [
     { name: 'Home', href: '/', icon: Home },
-    { name: 'Portfolio', href: '#portfolio', icon: FolderOpen },
-    { name: 'Services', href: '#services', icon: ClipboardList },
-    { name: 'Testimonials', href: '#testimonials', icon: Star },
     { name: 'About', href: '#about', icon: User },
+     { name: 'Services', href: '#services', icon: ClipboardList },
+    { name: 'Portfolio', href: '#portfolio', icon: FolderOpen },
+    { name: 'Testimonials', href: '#testimonials', icon: Star },
     { name: 'Contact', href: '#contact', icon: Mail }
   ];
 
   return (
-  <nav className="h-[70px] w-full px-4 fixed backdrop-blur-md sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between z-520 text-gray-700 transition-all border-b border-transparent">
+  <nav className="h-[70px] w-full fixed px-4 bg-white sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between text-gray-700 transition-all z-50">
       
       {/* Logo */}
   <a href="#home" className="text-pink-600 flex-shrink-0">
@@ -47,11 +47,12 @@ const Navbar = () => {
                 e.preventDefault();
                 scrollToSection(item.href.slice(1));
               }}
-              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300 interactive"
+              className="relative overflow-visible group text-gray-700 hover:text-pink-500 transition-colors duration-300 interactive"
             >
               <span className="block text-xl group-active:scale-90 transition-transform duration-300">
                 {item.name}
               </span>
+            
             </a>
           ) : (
             <Link
@@ -65,11 +66,12 @@ const Navbar = () => {
                   }, 0);
                 }
               }}
-              className="relative overflow-hidden h-6 group text-gray-700 hover:text-pink-500 transition-colors duration-300 interactive"
+              className="relative overflow-visible group text-gray-700 hover:text-pink-500 transition-colors duration-300 interactive"
             >
               <span className="block text-xl group-active:scale-90 transition-transform duration-300">
                 {item.name}
               </span>
+              
             </Link>
           )
         ))}
@@ -77,12 +79,16 @@ const Navbar = () => {
 
       {/* Desktop CTA Button */}
       <div className="hidden lg:flex items-center">
-        <Link
-          to="/book-consultation"
+        <a
+          href="#let-start"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection('letstalk');
+          }}
           className="bg-pink-500 hover:shadow-[0px_0px_30px_14px] shadow-[0px_0px_30px_7px] hover:shadow-white/50 shadow-white/50 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-pink-400 transition duration-300 interactive"
         >
           Book a Consultation
-        </Link>
+        </a>
       </div>
 
       {/* Mobile Menu Toggle */}
@@ -146,14 +152,18 @@ const Navbar = () => {
             );
           })}
           <div className="pt-4 border-t border-gray-100">
-            <Link
-              to="/book-consultation"
-              onClick={() => setIsMenuOpen(false)}
+            <a
+              href="#letstalk"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('letstalk');
+                setIsMenuOpen(false);
+              }}
               className="flex items-center justify-center gap-2 bg-pink-500 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-pink-600 transition-all duration-300"
             >
               <Mail className="w-4 h-4" />
               Get Started
-            </Link>
+            </a>
           </div>
         </div>
       </div>

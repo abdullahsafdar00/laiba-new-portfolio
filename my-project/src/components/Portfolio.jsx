@@ -12,7 +12,7 @@ const Portfolio = ({ preview = false }) => {
       className={`w-full min-h-screen px-4 sm:px-6 lg:px-8 pb-16 transition-colors duration-500 overflow-x-hidden`}
     >
      <motion.div
-  initial={{ opacity: 0, y: 30 }}
+  initial={{ opacity: 0, y: 50 }}
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
   transition={{ duration: 0.6 }}
@@ -34,7 +34,7 @@ const Portfolio = ({ preview = false }) => {
           return (
             <motion.div
               key={idx}
-              className={`flex flex-col lg:flex-row items-center gap-10 border-2 rounded-lg p-2 border-pink-600 lg:border-0
+              className={`flex flex-col lg:flex-row items-center border-2 border-pink-600 py-2 lg:border-0 gap-10 rounded-lg 
  ${
                 isEven ? "lg:flex-row-reverse" : ""
               }`}
@@ -44,7 +44,7 @@ const Portfolio = ({ preview = false }) => {
               viewport={{ once: false }}
             >
               {/* Text Content */}
-              <div className="flex-1">
+              <div className="flex-1 px-4">
                 <h3
                   className={`text-2xl font-bold mb-4 text-pink-600`}
                 >
@@ -86,7 +86,7 @@ const Portfolio = ({ preview = false }) => {
                 <img
                   src={project.img}
                   alt={project.title}
-                  className="w-full object-cover rounded-xl shadow-lg h-56 sm:h-64 md:h-72 lg:h-72 transition-transform duration-300 interactive hover:scale-105"
+                  className="w-full object-cover rounded-xl h-56 sm:h-64 md:h-72 lg:h-72 transition-transform duration-300 interactive hover:scale-105"
                 />
               </div>
             </motion.div>

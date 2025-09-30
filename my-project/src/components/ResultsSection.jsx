@@ -1,6 +1,6 @@
 import React from 'react';
 import { Briefcase, Users, TrendingUp, Clock } from 'lucide-react';
-
+import { motion } from 'framer-motion';
 // Single metric — animates each time it comes into view
 export const ResultMetric = ({ label, end, suffix = '', Icon }) => {
   const ref = React.useRef(null);
@@ -64,7 +64,12 @@ export const ResultMetric = ({ label, end, suffix = '', Icon }) => {
 
 const ResultsSection = () => {
   return (
-    <section className="mb-10">
+    <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
+     className="mb-10">
       <div className="text-center mb-6">
         <h2 className="text-3xl font-semibold text-black">The Results</h2>
         <p className="mt-2 text-gray-600 max-w-2xl mx-auto">Real outcomes from projects — metrics that show the value my designs bring.</p>
@@ -77,7 +82,7 @@ const ResultsSection = () => {
         <ResultMetric Icon={Clock}  label="Avg. Delivery Time (days)" end={7} suffix="d" />
       </div>
 
-    </section>
+    </motion.section>
   );
 };
 

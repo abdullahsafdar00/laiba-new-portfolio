@@ -14,9 +14,10 @@ import { Sparkles } from "lucide-react";
 export default function About() {
   return (
    <motion.section
-    initial={{ opacity: 0, y: 30 }}
+    initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
     className="relative px-6 sm:px-12 lg:px-24 py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-white via-pink-50/40 to-white text-slate-800 overflow-hidden">
 
       {/* Section Heading */}

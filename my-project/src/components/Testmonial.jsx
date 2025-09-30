@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const testimonials = [
   {
@@ -166,7 +167,12 @@ const Testimonial = () => {
         }
       `}</style>
 
-      <section className="bg-white py-16 overflow-hidden md:w-6xl md:mx-auto">
+      <motion.section
+          initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
+       className="bg-white py-16 overflow-hidden md:w-6xl md:mx-auto">
         <div className="text-center mb-12 px-4">
           <h2 className="text-3xl sm:text-4xl font-semibold text-pink-500"> <span className='text-slate-800'>What Our</span> Clients <span className='text-slate-800'>Say</span></h2>
           <p className="mt-2 text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
@@ -197,7 +203,12 @@ const Testimonial = () => {
         </div>
 
         {/* Testimonial video */}
-        <div className="mt-8 px-4 w-full flex justify-center">
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
+         className="mt-8 px-4 w-full flex justify-center">
           <div className="w-full bg-[#D5B9A4] shadow-xs rounded-xl">
             <video
               ref={videoRef}
@@ -210,8 +221,8 @@ const Testimonial = () => {
               aria-label="Testimonial video from a client"
             />
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = React.useState(null)
@@ -38,13 +39,23 @@ const FAQ = () => {
                     font-family: 'Poppins', sans-serif;
                 }
             `}</style>
-            <div className='flex flex-col items-center text-center mb-10 text-slate-800 px-3'>
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
+             className='flex flex-col items-center text-center mb-10 text-slate-800 px-3'>
                 
                 <h1 className='text-3xl md:text-4xl font-semibold my-6'>Still Wondering About Something?</h1>
                
                 <div className='max-w-3xl w-full mt-6 flex flex-col gap-4 items-start text-left'>
                     {faqsData.map((faq, index) => (
-                        <div key={index} className='flex flex-col items-start w-full'>
+                        <motion.div key={index}
+                            initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }} 
+                         className='flex flex-col items-start w-full'>
                             <div className='flex items-center justify-between w-full cursor-pointer bg-slate-50 border border-slate-200 p-4 rounded' onClick={() => setOpenIndex(openIndex === index ? null : index)}>
                                 <h2 className='text-base lg:text-lg font-semibold'>{faq.question}</h2>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${openIndex === index ? "rotate-180" : ""} transition-all duration-500 ease-in-out`}>
@@ -54,12 +65,12 @@ const FAQ = () => {
                             <p className={`text-sm lg:text-base text-slate-500 px-4 transition-all duration-500 ease-in-out ${openIndex === index ? "opacity-100 max-h-[300px] translate-y-0 pt-4" : "opacity-0 max-h-0 -translate-y-2"}`} >
                                 {faq.answer}
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
     
 
-            </div>
+            </motion.div>
         </>
     )
 }

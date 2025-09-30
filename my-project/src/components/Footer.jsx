@@ -1,9 +1,15 @@
 import React from "react";
 import { Github, Twitter, Linkedin, Mail, Instagram } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-sm text-slate-600">
+    <motion.footer
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
+     className="bg-white text-sm text-slate-600">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Column 1: Brand */}
         <div>
@@ -63,6 +69,6 @@ export default function Footer() {
       <div className="text-center border-t border-slate-200 py-4 text-xs text-slate-400">
         © {new Date().getFullYear()} Laiba S. All rights reserved.
       </div>
-    </footer>
+    </motion.footer>
   );
 }

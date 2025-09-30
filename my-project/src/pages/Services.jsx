@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ClipboardList, ImageIcon, Send } from 'lucide-react';
 import ResultsSection from '../components/ResultsSection';
-
+import { motion } from 'framer-motion';
 // ResultMetric animates every time it comes into view using IntersectionObserver
 const ResultMetric = ({ label, end, suffix = '' }) => {
   const ref = React.useRef(null);
@@ -92,7 +92,12 @@ const Services = () => {
   };
 
   return (
-    <section className="min-h-screen bg-white pt-20  px-4">
+    <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: false }}
+     className="min-h-screen bg-white pt-20  px-4">
       <div className="max-w-6xl mx-auto">
 
 
@@ -129,7 +134,7 @@ const Services = () => {
         </div>
         {/* Booking handled in the static LetsTalk component */}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

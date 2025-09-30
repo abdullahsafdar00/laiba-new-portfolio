@@ -164,42 +164,57 @@ const Hero = () => {
           </div>
 
           {/* brand marquee */}
-          <p className="py-6 text-slate-600 mt-10 text-sm sm:text-base md:text-lg">
-            <span className="font-bold">Brands, </span>I’ve worked with...
-          </p>
-          <div className="overflow-hidden w-full relative max-w-6xl mx-auto select-none">
-            <div className="absolute left-0 top-0 h-full w-16 sm:w-20 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />
-            <div
-              ref={trackRef}
-              className="marquee-track flex items-center min-w-[200%] will-change-transform"
-            />
-            <div className="absolute right-0 top-0 h-full w-16 sm:w-20 z-10 pointer-events-none bg-gradient-to-l from-white to-transparent" />
-          </div>
+<p className="py-6 text-slate-600 mt-10 text-sm sm:text-base md:text-lg">
+  <span className="font-bold">Brands, </span>I’ve worked with...
+</p>
+<div className="overflow-hidden w-full relative max-w-6xl mx-auto select-none">
+  <div className="absolute left-0 top-0 h-full w-16 sm:w-20 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />
+
+  {/* Marquee track */}
+  <div className="marquee-track flex items-center will-change-transform">
+    {[...brandIcons, ...brandIcons].map((icon, idx) => (
+      <img
+        key={idx}
+        src={icon.src}
+        alt={icon.alt}
+        loading="lazy"
+        className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto mx-4 object-contain transition-transform hover:scale-105"
+        draggable={false}
+      />
+    ))}
+  </div>
+
+  <div className="absolute right-0 top-0 h-full w-16 sm:w-20 z-10 pointer-events-none bg-gradient-to-l from-white to-transparent" />
+</div>
+
+<style>{`
+  .marquee-track {
+    animation: marqueeScroll 22s linear infinite;
+    display: flex;
+    gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    .marquee-track {
+      animation-duration: 18s;
+      gap: 1rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .marquee-track {
+      animation-duration: 26s;
+    }
+  }
+  @keyframes marqueeScroll {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-50%); }
+  }
+`}</style>
+
+        
         </div>
       </motion.div>
 
-      <style>{`
-        .marquee-track {
-          animation: marqueeScroll 22s linear infinite;
-          display: flex;
-          gap: 0.75rem;
-        }
-        @media (max-width: 768px) {
-          .marquee-track {
-            animation-duration: 18s;
-            gap: 0.5rem;
-          }
-        }
-        @media (min-width: 1280px) {
-          .marquee-track {
-            animation-duration: 26s;
-          }
-        }
-        @keyframes marqueeScroll {
-          from { transform: translateX(0%); }
-          to { transform: translateX(-50%); }
-        }
-      `}</style>
+      
     </>
   );
 };

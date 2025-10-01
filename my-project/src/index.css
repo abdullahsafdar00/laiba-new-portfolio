@@ -31,7 +31,6 @@ html, body, #root {
  @media (max-width: 640px) {
     h1, h2, h3 {
       word-break: break-word;
-      hyphens: auto;
     }
   }
 

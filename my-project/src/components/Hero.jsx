@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 
 const brandIcons = [
@@ -13,27 +13,6 @@ const brandIcons = [
 ];
 
 const Hero = () => {
-  const trackRef = useRef(null);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (track) {
-      track.innerHTML = "";
-      [...brandIcons, ...brandIcons].forEach((icon) => {
-        const img = document.createElement("img");
-        img.src = icon.src;
-        img.alt = icon.alt;
-        img.className =
-          "h-28 sm:h-20 md:h-20 lg:h-28 xl:h-32 w-auto mx-2 sm:mx-3 transition-transform hover:scale-105";
-        img.draggable = false;
-        track.appendChild(img);
-      });
-
-      [...track.children].forEach((img) => {
-        track.appendChild(img.cloneNode(true));
-      });
-    }
-  }, []);
 
   return (
     <>
@@ -97,7 +76,7 @@ const Hero = () => {
           </div>
 
           {/* headline */}
-          <h1 className="text-3xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold max-w-5xl text-center mt-6 leading-tight sm:leading-snug md:leading-[65px]">
+          <h1 className="text-4xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold max-w-5xl text-center mt-6 leading-tight sm:leading-snug md:leading-[65px]">
             Boost Your Sales On Amazon{" "}
             <span className="block sm:inline bg-gradient-to-r from-pink-700 to-pink-600 bg-clip-text text-transparent">
               With Optimized Visuals.
@@ -164,7 +143,7 @@ const Hero = () => {
           </div>
 
           {/* brand marquee */}
-<p className="py-6 text-slate-600 mt-10 text-sm sm:text-base md:text-lg">
+<p className="py-6 text-slate-600 mt-10 text-md sm:text-base md:text-lg">
   <span className="font-bold">Brands, </span>I’ve worked with...
 </p>
 <div className="overflow-hidden w-full relative max-w-6xl mx-auto select-none">
@@ -189,25 +168,29 @@ const Hero = () => {
 
 <style>{`
   .marquee-track {
-    animation: marqueeScroll 22s linear infinite;
-    display: flex;
-    gap: 2rem;
+  animation: marqueeScroll 5s linear infinite;
+  display: flex;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .marquee-track {
+    animation-duration: 5s;
+    gap: 1rem;
   }
-  @media (max-width: 768px) {
-    .marquee-track {
-      animation-duration: 18s;
-      gap: 1rem;
-    }
+}
+
+@media (min-width: 1280px) {
+  .marquee-track {
+    animation-duration: 5s; 
   }
-  @media (min-width: 1280px) {
-    .marquee-track {
-      animation-duration: 26s;
-    }
-  }
-  @keyframes marqueeScroll {
-    from { transform: translateX(0%); }
-    to { transform: translateX(-50%); }
-  }
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
+}
+
 `}</style>
 
         

@@ -5,7 +5,10 @@ import { Sparkles } from "lucide-react";
   const scrollToSection = (sectionId) => {
   
       const element = document.getElementById(sectionId);
-      if (element) {
+      if (!element) return;
+      if (typeof window !== 'undefined' && window.lenis && typeof window.lenis.scrollTo === 'function') {
+        window.lenis.scrollTo(element)
+      } else {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     
@@ -13,7 +16,7 @@ import { Sparkles } from "lucide-react";
 
 export default function About() {
   return (
-   <motion.section
+   <motion.div
     initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -105,6 +108,6 @@ export default function About() {
           </a>
         </div>
       </motion.div>
-    </motion.section>
+    </motion.div>
   );
 }

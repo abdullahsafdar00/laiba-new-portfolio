@@ -64,7 +64,7 @@ export const ResultMetric = ({ label, end, suffix = '', Icon }) => {
 
 const ResultsSection = () => {
   return (
-    <motion.section
+    <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -82,7 +82,7 @@ const ResultsSection = () => {
         <ResultMetric Icon={Clock}  label="Avg. Delivery Time (days)" end={7} suffix="d" />
       </div>
 
-    </motion.section>
+    </motion.div>
   );
 };
 

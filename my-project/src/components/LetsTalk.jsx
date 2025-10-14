@@ -18,7 +18,9 @@ const LetsTalk = () => {
         <div className="w-full rounded-lg overflow-hidden border border-pink-100">
           <iframe
             src={calUrl}
-            style={{ width: '100%', height: 700, border: 0 }}
+            // Use a responsive cap so the iframe won't force a large fixed box
+            // that can create nested scrolling on some layouts.
+            style={{ width: '100%', height: 'min(80vh, 700px)', border: 0 }}
             allow="camera; microphone; clipboard-read; clipboard-write"
             loading="lazy"
             title="Cal.com booking calendar"

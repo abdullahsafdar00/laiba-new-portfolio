@@ -13,7 +13,10 @@ const Navbar = () => {
   const scrollToSection = (sectionId) => {
   
       const element = document.getElementById(sectionId);
-      if (element) {
+      if (!element) return;
+      if (typeof window !== 'undefined' && window.appScrollTo) {
+        window.appScrollTo(element)
+      } else {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     
@@ -29,7 +32,10 @@ const Navbar = () => {
   ];
 
   return (
-  <nav className="h-[70px] w-full fixed px-4 bg-white sm:px-6 md:px-16 lg:px-24 xl:px-32 flex items-center justify-between text-gray-700 transition-all z-50">
+<nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
+
+  <div className="mx-auto flex items-center justify-between min-h-[70px] px-4 sm:px-6 md:px-16 lg:px-24 xl:px-32 max-w-[1600px] text-gray-700">
+
       
       {/* Logo */}
   <a href="#home" className="text-pink-600 flex-shrink-0">
@@ -166,6 +172,7 @@ const Navbar = () => {
             </a>
           </div>
         </div>
+      </div>
       </div>
     </nav>
   );

@@ -203,11 +203,8 @@ const Testimonial = () => {
         </div>
 
         {/* Testimonial video */}
-        <motion.div
-            initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
+        <div
+            
          className="mt-8 px-4 w-full flex justify-center">
           <div className="w-full bg-[#D5B9A4] shadow-xs rounded-xl">
             <video
@@ -221,7 +218,7 @@ const Testimonial = () => {
               aria-label="Testimonial video from a client"
             />
           </div>
-        </motion.div>
+        </div>
       </motion.section>
     </>
   );

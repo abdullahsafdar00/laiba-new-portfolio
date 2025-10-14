@@ -21,7 +21,7 @@ export default function Footer() {
 
         {/* Column 2: Navigation */}
         <div className="flex flex-col gap-2">
-          <p className="font-medium text-slate-700">Navigation</p>
+          <p className="text-slate-700 font-semibold">Navigation</p>
           <a href="/about" className="hover:text-pink-600 transition">About</a>
           <a href="/contact" className="hover:text-pink-600 transition">Contact</a>
           <a href="/components" className="hover:text-pink-600 transition">Pricing</a>
@@ -32,7 +32,7 @@ export default function Footer() {
 
         {/* Column 3: Contact & Socials */}
         <div className="flex flex-col gap-3">
-          <p className="font-medium text-slate-700">Contact</p>
+          <p className="font-semibold text-slate-700">Contact</p>
           <a href="mailto:hello@prebuiltui.com" className="hover:text-pink-600 transition">
             laibagfx421@gmail.com
           </a>

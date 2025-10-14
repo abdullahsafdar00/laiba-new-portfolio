@@ -9,7 +9,6 @@ import {
   Send,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const contactDetails = [
@@ -46,8 +45,10 @@ const contactDetails = [
   },
 ];
 
+  console.log(motion)
+
 export default function Contact() {
-  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({ name: "", email: "", content: "" });
   const [loading, setLoading] = useState(false);
 
@@ -57,7 +58,7 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true);    
 
     try {
       const res = await fetch("http://localhost:5000/api/contact", {
@@ -83,11 +84,7 @@ export default function Contact() {
   return (
     <div className="px-4 sm:px-6 lg:px-12 py-16 sm:py-20 max-w-7xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 text-slate-800">
       {/* Contact Info Panel */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{once: false}}
+      <div
         className="w-full md:w-1/2 bg-white p-6 sm:p-8 lg:p-10 rounded-2xl hover:shadow-2xl shadow-lg transition"
       >
         <h2 className="text-2xl sm:text-3xl font-semibold mb-6">
@@ -130,7 +127,7 @@ export default function Contact() {
           </a>
           .
         </p>
-      </motion.div>
+      </div>
 
       {/* Contact Form */}
       <motion.form

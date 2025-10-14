@@ -1,5 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
+import Navbar from "./Navbar";
 
 const brandIcons = [
   { src: "/1.png", alt: "Brand 1" },
@@ -16,6 +17,7 @@ const Hero = () => {
 
   return (
     <>
+    <Navbar/>
       <motion.div 
           initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -95,9 +97,13 @@ const Hero = () => {
               href="#portfolio"
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .getElementById("portfolio")
-                  ?.scrollIntoView({ behavior: "smooth" });
+                const el = document.getElementById('portfolio')
+                if (!el) return
+                if (typeof window !== 'undefined' && window.appScrollTo) {
+                  window.appScrollTo(el)
+                } else {
+                  el.scrollIntoView({ behavior: 'smooth' })
+                }
               }}
               className="bg-pink-500 hover:bg-pink-600 text-white rounded-full px-6 sm:px-9 h-10 sm:h-12 flex items-center ring-offset-2 ring-1 ring-pink-400 transition-colors"
             >
@@ -120,9 +126,13 @@ const Hero = () => {
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
+                const el = document.getElementById('contact')
+                if (!el) return
+                if (typeof window !== 'undefined' && window.appScrollTo) {
+                  window.appScrollTo(el)
+                } else {
+                  el.scrollIntoView({ behavior: 'smooth' })
+                }
               }}
               className="flex items-center gap-2 border border-slate-400 hover:bg-pink-50 transition rounded-full px-4 sm:px-7 h-10 sm:h-12 text-slate-700"
             >
@@ -150,7 +160,7 @@ const Hero = () => {
   <div className="absolute left-0 top-0 h-full w-16 sm:w-20 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />
 
   {/* Marquee track */}
-  <div className="marquee-track flex items-center will-change-transform">
+  <div className="marquee-track flex items-center">
     {[...brandIcons, ...brandIcons].map((icon, idx) => (
       <img
         key={idx}
@@ -168,27 +178,27 @@ const Hero = () => {
 
 <style>{`
   .marquee-track {
-  animation: marqueeScroll 5s linear infinite;
+  animation: marqueeScroll 3s linear infinite;
   display: flex;
   gap: 2rem;
 }
 
 @media (max-width: 768px) {
   .marquee-track {
-    animation-duration: 5s;
+    animation-duration: 3s;
     gap: 1rem;
   }
 }
 
 @media (min-width: 1280px) {
   .marquee-track {
-    animation-duration: 5s; 
+    animation-duration: 3s; 
   }
 }
 
 @keyframes marqueeScroll {
   from { transform: translateX(0%); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-100%); }
 }
 
 `}</style>
